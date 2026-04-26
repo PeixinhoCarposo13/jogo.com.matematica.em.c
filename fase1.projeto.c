@@ -29,7 +29,7 @@ int calculo_facil();
 int calculo_medio();
 int calculo_dificil();
 int resposta_usuario();
-void verificar_resposta(int resposta_usuario, int resposta_correta);
+int verificar_resposta(int resposta_usuario, int resposta_correta);
 
 int main()
 {
@@ -42,6 +42,7 @@ int main()
 
 void loop_interacao_usuario()
 {
+  int score = 0; // Variável para armazenar o score
   while (1)
   {
     int dificuldade;
@@ -53,15 +54,17 @@ void loop_interacao_usuario()
     {
     case 0:
       printf("Encerrando o jogo. Obrigado por jogar!\n");
+      printf("Seu score final foi: %d\n", score);
       printf("\n");
-      return; // Encerra a função
+      return;
 
     case 1:
     {
       int resposta_correta = calculo_facil();
       int resposta = resposta_usuario();
 
-      verificar_resposta(resposta, resposta_correta);
+      score += verificar_resposta(resposta, resposta_correta);
+
       printf("\n");
       break;
     }
@@ -71,7 +74,8 @@ void loop_interacao_usuario()
       int resposta_correta = calculo_medio();
       int resposta = resposta_usuario();
 
-      verificar_resposta(resposta, resposta_correta);
+      score += verificar_resposta(resposta, resposta_correta);
+
       printf("\n");
       break;
     }
@@ -81,7 +85,8 @@ void loop_interacao_usuario()
       int resposta_correta = calculo_dificil();
       int resposta = resposta_usuario();
 
-      verificar_resposta(resposta, resposta_correta);
+      score += verificar_resposta(resposta, resposta_correta);
+
       printf("\n");
       break;
     }
@@ -285,14 +290,16 @@ int resposta_usuario()
 }
 
 // Função para verificar a resposta do usuário
-void verificar_resposta(int resposta_usuario, int resposta_correta)
+int verificar_resposta(int resposta_usuario, int resposta_correta)
 {
   if (resposta_usuario == resposta_correta)
   {
     printf("\nResposta correta! Você ganhou 1 ponto.\n");
+    return 1;
   }
   else
   {
     printf("\nResposta incorreta! A resposta correta era: %d\n", resposta_correta);
+    return 0;
   }
 }
