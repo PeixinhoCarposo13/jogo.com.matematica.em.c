@@ -24,6 +24,18 @@ Separação de responsabilidades:
 #include <stdlib.h>
 #include <time.h>
 
+void solicitar_dificuldade();
+void calculo_facil();
+void calculo_medio();
+
+int main()
+{
+  // calculo_facil();
+  calculo_medio();
+
+  return 0;
+}
+
 void solicitar_dificuldade()
 {
   int dificuldade;
@@ -50,8 +62,17 @@ void calculo_facil()
     break;
 
   case 1:
-    resultado = num1 - num2; // Calcula a subtração
-    printf("%d - %d = ?", num1, num2);
+    // Coloquei esse if para evitar uma subtração que de negativo
+    if (num2 > num1)
+    {
+      resultado = num2 - num1; // Calcula a subtração
+      printf("%d - %d = ?", num2, num1);
+    }
+    else
+    {
+      resultado = num1 - num2; // Calcula a subtração
+      printf("%d - %d = ?", num1, num2);
+    }
     break;
 
   case 2:
@@ -64,9 +85,61 @@ void calculo_facil()
   }
 }
 
-int main()
+void calculo_medio()
 {
-  calculo_facil();
+  srand(time(NULL)); // Inicializa o gerador de números aleatórios
+  int operacao1 = 1, operacao2 = 1;
+  int num1 = 0, num2 = 0, num3 = 0, opr_num1_num2 = 0, resultado = 0;
 
-  return 0;
+  operacao1 = rand() % 3; // Gera um número aleatório entre 0 e 2 para escolher a operação
+  operacao2 = rand() % 3; // Gera um número aleatório entre 0 e 2 para escolher a operação
+
+  num1 = (rand() % 100) + 1; // Gera um número aleatório entre 1 e 100
+  num2 = (rand() % 100) + 1; // Gera um número aleatório entre 1 e 100
+  num3 = (rand() % 100) + 1; // Gera um número aleatório entre 1 e 100
+
+  switch (operacao1)
+  {
+  case 0:
+    opr_num1_num2 = num1 + num2; // Calcula a soma
+    printf("Quanto é %d + %d", num1, num2);
+    break;
+
+  case 1:
+    // Como é de nivel médio, nao vou ajustar para ficar sem negativos
+    opr_num1_num2 = num1 - num2; // Calcula a subtração
+    printf("Quanto é %d - %d", num1, num2);
+
+    break;
+
+  case 2:
+    opr_num1_num2 = num1 * num2; // Calcula a multiplicação
+    printf("Quanto é %d * %d", num1, num2);
+    break;
+
+  default:
+    break;
+  }
+
+  switch (operacao2)
+  {
+  case 0:
+    resultado = opr_num1_num2 + num3; // Calcula a soma
+    printf(" + %d = ?", num3);
+    break;
+
+  case 1:
+    // Como é de nivel médio, nao vou ajustar para ficar sem negativos
+    resultado = opr_num1_num2 - num3; // Calcula a subtração
+    printf(" - %d = ?", num3);
+    break;
+
+  case 2:
+    resultado = opr_num1_num2 * num3; // Calcula a multiplicação
+    printf(" * %d = ?", num3);
+    break;
+
+  default:
+    break;
+  }
 }
